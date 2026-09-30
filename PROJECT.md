@@ -140,15 +140,25 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - Decided by eye: hero = original five photos; menu photos = original six + counter; Bhalu and Romeo third in memory lane; no captions on hero slides or memory cards; section padding 64 / 48px; Find Us photo removed.
 - Mobile pass at 390 and 360 wide: tile overflow fixed; findings below.
 
-### Open, in order
+### Session 3 (2026-09-30) — phone nav, moods, first deploy
 
-1. ~~**Phone navigation**~~ — done 2026-09-30: dimmed icon-only links in the header for sections with `phoneIcon` in config (Menu, Events, Find us). Confirm by eye.
-2. **Theme lab picks** — accent / surface / header / photo / text / board / memory. Only brick accent is stated. Then `switcher: false` and delete the losers.
-3. **Mobile**: Events and Made in Bir are sideways strips on phones (done 2026-09-30). Tap targets: user judged them fine. Theme lab: leave as is (dev only). Still open: menu tile height, Events eyebrow wrap.
-4. **Find Us**: a map where the gate photo was.
-5. **Content from the owners**: real food prices (drinks are real); originals of the 24 + 22 captured posts or an all-time Instagram export; the logo vector (the Instagram profile picture is the emblem); what happened Oct 2016 → Feb 2018; Artists' Market dates.
-6. **Rights**: the ten visitor photos in Moments need a yes from each poster before launch.
-7. Type and spacing tune on the chosen theme; copy pass on all section text.
+- Phone header: dimmed icon links (Menu, Events, Find us) from `phoneIcon` in config.
+- Events and Made in Bir scroll sideways on phones; thin tinted scrollbars on all photo strips.
+- Moods cut to **golden hour** (default; the old rain gradient, no streaks), **night**, **snow**. A sky photo is colour-blended over every mood (lab `Sunset: page`, `Sky: drone`). Removed moods saved in `reources/dev/ambient-all-moods-2026-09-30.svelte`.
+- Lab picks made defaults: brick, ochre, scrim, natural, left, wood, strip, page, drone. Theme lab now shows only on `npm run dev`.
+- **Live test copy:** https://dragonslayersimba.github.io/silver-linings/ from github.com/DragonSlayerSimba/silver-linings (public). Every push to main deploys via `.github/workflows/deploy.yml`; Pages source must be "GitHub Actions". robots blocked on this copy.
+
+### Open, for the final session (bring the final resources)
+
+1. **Content from the owners**: real food prices (drinks are real); originals of the captured posts or a full Instagram export; the logo vector; what happened Oct 2016 → Feb 2018; Artists' Market dates.
+2. **Rights**: the ten visitor photos in Moments need a yes from each poster (they are public on the test copy now), or hide Moments.
+3. **Mood photos**: full-size originals of the meadow and ember sunsets (current copies are WhatsApp-compressed); photos for night and snow if they should get their own sky. Decide whether night needs a real dark theme.
+4. **Mood ideas discussed, not chosen**: "Bir right now" (IST clock, real sunset time, live Open-Meteo weather), per-mood tagline / status line / menu pick, scroll-through-a-day.
+5. **Clean-up**: delete losing Theme lab options and the band/MoodBand trial if unused; set `switcher: false` for launch.
+6. **Remaining mobile**: menu teaser tile height, Events eyebrow wrap.
+7. **Find Us**: a map where the gate photo was.
+8. Type and spacing tune; copy pass on all section text.
+9. **Launch hosting**: Cloudflare Workers + silverliningscafe.site (set `BASE_PATH` empty), or GitHub Pages with the custom domain. Unblock robots at launch.
 
 ### Later
 
@@ -156,7 +166,6 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - GSAP scroll choreography (sunset shift, section reveals); pinned horizontal scroll for Memory Lane
 - Rive icons replacing the SVG set, key by key
 - Golden-hour and rain photos for the hero
-- Cloudflare Workers static deploy + domain (GitHub repo as source)
 
 ---
 
@@ -175,7 +184,10 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - `src/lib/assets/photos/{hero,menu,memory,social,events,shop}/` — only files in use; enhanced-img emits avif/webp at build.
 - `reources/` (git-ignored) — raw photos, the Instagram export, `instagram-picks/` (catalogue, review pages, staged crops), `dev/mobile-harness.html` (copy into `static/` to test phone widths).
 - Node 24 required (`.node-version`, `engines`); `n` is installed with `N_PREFIX=~/.n`.
-- Deploy target: static `build/`. Cloudflare Workers static assets (or GitHub Pages).
+- `src/lib/mood-photos.ts` — sky photos for the moods (`photos/mood/`), crop anchors and alt text. `MoodBand.svelte` is the band trial.
+- `src/lib/components/NavIcon.svelte` — phone header icons keyed by `phoneIcon`.
+- `labOn` in `theme.svelte.ts` — the Theme lab exists only on the dev server.
+- Deploy: static `build/`. `BASE_PATH` sets the base path (the Pages workflow uses `/silver-linings`); internal links go through `resolve()` from `$app/paths`. Live test copy on GitHub Pages; Cloudflare Workers still the launch option.
 
 ---
 
