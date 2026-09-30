@@ -4,7 +4,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import config from '$config';
 	import { season } from '$lib/season.svelte';
-	import { theme } from '$lib/theme.svelte';
+	import { theme, labOn } from '$lib/theme.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import { startSmoothScroll } from '$lib/motion/smooth-scroll';
 	import AmbientBackground from '$lib/components/ambient/AmbientBackground.svelte';
@@ -51,5 +51,5 @@
 	<Header />
 	<main>{@render children()}</main>
 	<Footer />
-	{#if config.theme.switcher}<ThemeSwitcher />{/if}
+	{#if labOn}<ThemeSwitcher />{/if}
 </div>

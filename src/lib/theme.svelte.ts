@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import config from '$config';
 import type {
 	Accent,
@@ -17,6 +18,12 @@ import type {
  * so reloads while editing keep the same look.
  */
 const KEY = 'sl-theme';
+
+/**
+ * The Theme lab only runs on the local dev server (`npm run dev`), never in a
+ * build, so deployed copies always show the config defaults.
+ */
+export const labOn = dev && config.theme.switcher;
 const greenNames = Object.keys(config.theme.greenSets);
 
 const defaults = () => ({
@@ -92,7 +99,7 @@ export const theme = {
 	},
 	/** Restore a remembered choice; call once on mount. */
 	restore() {
-		if (!config.theme.switcher) return;
+		if (!labOn) return;
 		try {
 			const raw = localStorage.getItem(KEY);
 			if (!raw) return;

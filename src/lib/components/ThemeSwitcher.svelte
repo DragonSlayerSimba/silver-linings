@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { theme, options } from '$lib/theme.svelte';
 
-	// Dev-only panel for trying design decisions by eye. Enabled by theme.switcher in site.config.ts.
+	// Dev-only panel for trying design decisions by eye. Shown on `npm run dev` when theme.switcher is true; never in builds.
 	let open = $state(true);
 
 	const rows = $derived([
