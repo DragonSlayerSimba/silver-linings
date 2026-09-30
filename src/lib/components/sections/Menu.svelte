@@ -8,6 +8,7 @@
 	import { featured, categoryOf, groups, boardClasses, pictureOf } from '$lib/menu';
 	import { priceLabel } from '$lib/utils';
 	import { theme } from '$lib/theme.svelte';
+	import { resolve } from '$app/paths';
 
 	// Home-page teaser: the counter tile cycles through the counter photo and
 	// the featured items that have one; hovering a favourite pins its photo.
@@ -76,7 +77,7 @@
 	<div class="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-14">
 		<!-- The counter tile: photos on top, a label strip below, like the real one -->
 		<a
-			href="/menu#bakes"
+			href={`${resolve('/menu')}#bakes`}
 			class="group block min-w-0 overflow-hidden rounded-3xl shadow-[0_24px_60px_-30px_rgb(0_0_0/0.55)]"
 			aria-label="Bakes and desserts, from the counter"
 		>
@@ -135,7 +136,7 @@
 						{@const hasPhoto = !!pictureOf(item.image?.file)}
 						<li>
 							<a
-								href={`/menu#${item.categoryId}`}
+								href={`${resolve('/menu')}#${item.categoryId}`}
 								class={[
 									'-mx-3 flex items-center gap-4 rounded-xl px-3 py-3.5 transition',
 									hasPhoto && 'hover:bg-cream/50',
@@ -172,7 +173,7 @@
 			{/if}
 
 			<a
-				href="/menu"
+				href={resolve('/menu')}
 				class="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-cream shadow-sm transition hover:brightness-110"
 			>
 				See the full menu
@@ -190,7 +191,7 @@
 					{#each g.categories as c (c.id)}
 						<li>
 							<a
-								href={`/menu#${c.id}`}
+								href={`${resolve('/menu')}#${c.id}`}
 								class={['block rounded-full border px-3 py-1 text-sm transition', b.chip]}
 							>
 								{c.title}

@@ -1,24 +1,43 @@
 <script lang="ts">
 	import config from '$config';
 	import { season } from '$lib/season.svelte';
+	import { theme } from '$lib/theme.svelte';
+	import { skyPhoto } from '$lib/mood-photos';
 
-	// Fixed layer behind everything. Three moods stacked; the active one fades in.
+	// Fixed layer behind everything. One layer per mood, stacked; the active one fades in.
+	// Earlier moods (greenery, rain, mist, silver lining) are kept in reources/dev/.
 	const calm = config.calm;
+	const sky = $derived(skyPhoto(theme.sky));
+	// The sky photo blends over every mood while the lab's Sunset row is 'page' (the default).
+	const showPhoto = $derived(theme.sunsetPhoto === 'page');
 </script>
 
 <div class="ambient" class:calm data-season={season.current} aria-hidden="true">
-	<div class="layer greenery">
-		<span class="blob b1"></span>
-		<span class="blob b2"></span>
-		<span class="blob b3"></span>
+	<div class="layer golden-hour"></div>
+	<div class="layer night">
+		<span class="moon"></span>
+		<span class="stars"></span>
+		<span class="stars twinkle"></span>
 	</div>
-	<div class="layer rain">
-		<span class="streaks"></span>
-		<span class="streaks far"></span>
+	<div class="layer snow">
+		<span class="flakes"></span>
+		<span class="flakes near"></span>
 	</div>
-	<div class="layer sunset">
-		<span class="sun"></span>
-	</div>
+	{#if showPhoto}
+		<!-- The sky photo (Theme lab → Sky) behind the whole page. Blended as colour only, so
+		     the page keeps its lightness and text stays readable; fades out towards the bottom. -->
+		<div class="photo">
+			{#key sky.file}
+				<enhanced:img
+					src={sky.src}
+					alt=""
+					sizes="100vw"
+					class="size-full object-cover"
+					style={`object-position: ${sky.position}`}
+				/>
+			{/key}
+		</div>
+	{/if}
 	<div class="absolute inset-0 grain"></div>
 </div>
 
@@ -36,132 +55,137 @@
 		opacity: 0;
 		transition: opacity 1.6s var(--ease-soft);
 	}
-	[data-season='greenery'] .greenery,
-	[data-season='rain'] .rain,
-	[data-season='sunset'] .sunset {
+	[data-season='golden-hour'] .golden-hour,
+	[data-season='night'] .night,
+	[data-season='snow'] .snow {
 		opacity: 1;
 	}
 
-	/* Greenery: soft light with slow drifting leaf-coloured blobs */
-	.greenery {
-		background: linear-gradient(
-			180deg,
-			color-mix(in oklab, var(--sl-surface) 85%, var(--sl-leaf)),
-			var(--sl-surface) 60%
-		);
-	}
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
-		opacity: 0.45;
-		animation: drift 28s ease-in-out infinite alternate;
-	}
-	.b1 {
-		width: 42vmax;
-		height: 42vmax;
-		left: -12vmax;
-		top: -10vmax;
-		background: var(--sl-leaf);
-	}
-	.b2 {
-		width: 36vmax;
-		height: 36vmax;
-		right: -10vmax;
-		top: 20vh;
-		background: var(--sl-moss);
-		animation-delay: -9s;
-		animation-duration: 34s;
-	}
-	.b3 {
-		width: 30vmax;
-		height: 30vmax;
-		left: 30vw;
-		bottom: -14vmax;
-		background: color-mix(in oklab, var(--sl-sky) 60%, var(--sl-leaf));
-		animation-delay: -18s;
-		animation-duration: 40s;
-	}
-	@keyframes drift {
-		from {
-			transform: translate3d(0, 0, 0) scale(1);
-		}
-		to {
-			transform: translate3d(6vw, 4vh, 0) scale(1.08);
-		}
-	}
-
-	/* Rain: muted sky with falling streaks */
-	.rain {
+	/* Golden hour: the rain mood's cool gradient, no streaks. Under the colour-blended
+	   sky photo only its brightness shows, which gives the photo a soft, even dusk. */
+	.golden-hour {
 		background: linear-gradient(
 			180deg,
 			color-mix(in oklab, var(--sl-periwinkle) 45%, var(--sl-surface)),
 			color-mix(in oklab, var(--sl-surface) 80%, var(--sl-sky)) 70%
 		);
 	}
-	.streaks {
-		position: absolute;
-		inset: -20% 0;
-		background-image: repeating-linear-gradient(
-			100deg,
-			transparent 0 18px,
-			color-mix(in oklab, var(--sl-silver) 50%, transparent) 18px 19px,
-			transparent 19px 47px
-		);
-		opacity: 0.35;
-		animation: fall 0.9s linear infinite;
-	}
-	.streaks.far {
-		background-size: 60% 60%;
-		opacity: 0.18;
-		animation-duration: 1.5s;
-	}
-	@keyframes fall {
-		from {
-			transform: translate3d(0, -12%, 0);
-		}
-		to {
-			transform: translate3d(-3%, 12%, 0);
-		}
-	}
-
-	/* Sunset: warm gradient with a low sun */
-	.sunset {
+	/* Night: dusky blue with a moon and stars. Kept mid-tone so ink text stays readable;
+	   a true dark night would need a dark theme for the content too. */
+	.night {
 		background: linear-gradient(
 			180deg,
-			color-mix(in oklab, var(--sl-sunset-to) 55%, var(--sl-cream)),
-			color-mix(in oklab, var(--sl-sunset-from) 60%, var(--sl-surface)) 45%,
-			var(--sl-surface) 85%
+			color-mix(in oklab, #1d2346 55%, var(--sl-periwinkle)),
+			color-mix(in oklab, #2b335e 30%, var(--sl-surface)) 45%,
+			color-mix(in oklab, var(--sl-periwinkle) 18%, var(--sl-surface)) 85%
 		);
 	}
-	.sun {
+	.moon {
 		position: absolute;
-		left: 50%;
-		top: 38vh;
-		width: 46vmin;
-		height: 46vmin;
-		transform: translateX(-50%);
+		right: 12vw;
+		top: 9vh;
+		width: 9vmin;
+		height: 9vmin;
 		border-radius: 50%;
-		background: radial-gradient(circle, var(--sl-sunset-from), transparent 70%);
-		opacity: 0.8;
-		animation: glow 8s ease-in-out infinite alternate;
+		background: radial-gradient(circle at 40% 40%, #fbf6e8, #e6e1d2 60%, #cfcabd);
+		box-shadow: 0 0 60px 18px color-mix(in oklab, #fbf6e8 35%, transparent);
 	}
-	@keyframes glow {
+	.stars {
+		position: absolute;
+		inset: 0 0 45% 0;
+		background-image:
+			radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+			radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+			radial-gradient(1.5px 1.5px at 160px 60px, #fff, transparent),
+			radial-gradient(1px 1px at 230px 170px, #fff, transparent),
+			radial-gradient(1px 1px at 60px 200px, #fff, transparent);
+		background-size: 260px 230px;
+		mask-image: linear-gradient(180deg, black 30%, transparent);
+		opacity: 0.8;
+	}
+	.stars.twinkle {
+		background-size: 370px 310px;
+		background-position: 120px 80px;
+		animation: twinkle 4s ease-in-out infinite alternate;
+	}
+	@keyframes twinkle {
 		to {
-			opacity: 0.55;
-			transform: translateX(-50%) scale(1.06);
+			opacity: 0.2;
 		}
 	}
 
-	.calm .blob,
-	.calm .streaks,
-	.calm .sun {
+	/* Snow: cold light and slowly falling flakes */
+	.snow {
+		background: linear-gradient(
+			180deg,
+			color-mix(in oklab, var(--sl-sky) 70%, white),
+			color-mix(in oklab, var(--sl-sky) 30%, var(--sl-surface)) 55%,
+			var(--sl-surface) 90%
+		);
+	}
+	.flakes {
+		position: absolute;
+		inset: 0;
+		background-image:
+			radial-gradient(2px 2px at 30px 40px, #fff, transparent),
+			radial-gradient(3px 3px at 120px 90px, #fff, transparent),
+			radial-gradient(2px 2px at 200px 150px, #fff, transparent),
+			radial-gradient(2.5px 2.5px at 70px 170px, #fff, transparent);
+		background-size: 240px 200px;
+		opacity: 0.9;
+		filter: drop-shadow(0 0 1px color-mix(in oklab, var(--sl-ink) 25%, transparent));
+		animation: snowfall 18s linear infinite;
+	}
+	.flakes.near {
+		background-size: 380px 320px;
+		opacity: 0.7;
+		filter: blur(1px) drop-shadow(0 0 1px color-mix(in oklab, var(--sl-ink) 25%, transparent));
+		animation-duration: 11s;
+	}
+	@keyframes snowfall {
+		from {
+			background-position:
+				0 0,
+				0 0,
+				0 0,
+				0 0;
+		}
+		to {
+			background-position:
+				60px 400px,
+				-40px 400px,
+				40px 400px,
+				-20px 400px;
+		}
+	}
+	.flakes.near {
+		animation-name: snowfall-near;
+	}
+	@keyframes snowfall-near {
+		to {
+			background-position:
+				80px 640px,
+				-60px 640px,
+				50px 640px,
+				-30px 640px;
+		}
+	}
+
+	.photo {
+		position: absolute;
+		inset: 0;
+		mix-blend-mode: color;
+		opacity: 0.9;
+		mask-image: linear-gradient(180deg, black 30%, transparent 95%);
+	}
+
+	.calm .twinkle,
+	.calm .flakes {
 		animation: none;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.blob,
-		.streaks,
-		.sun {
+		.twinkle,
+		.flakes {
 			animation: none;
 		}
 	}

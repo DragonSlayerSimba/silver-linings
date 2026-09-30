@@ -1,6 +1,6 @@
 <script lang="ts">
 	import config from '$config';
-	import { season, seasons } from '$lib/season.svelte';
+	import { season, seasons, seasonLabel } from '$lib/season.svelte';
 	import { hoursLabel, closedDaysLabel } from '$lib/utils';
 
 	const year = new Date().getFullYear();
@@ -13,18 +13,18 @@
 			<p>{hoursLabel()} · {closedDaysLabel()}</p>
 			<p>{config.contact.address.lines.join(', ')}</p>
 		</div>
-		<div class="flex items-center gap-2">
+		<div class="flex flex-wrap items-center gap-2">
 			<span class="mr-1">Mood</span>
 			{#each seasons as s (s)}
 				<button
 					type="button"
 					class={[
-						'rounded-full border px-3 py-1 capitalize transition',
+						'rounded-full border px-3 py-1 transition',
 						season.current === s ? 'border-accent text-accent' : 'border-ink/20'
 					]}
 					onclick={() => season.set(s)}
 				>
-					{s}
+					{seasonLabel(s)}
 				</button>
 			{/each}
 		</div>

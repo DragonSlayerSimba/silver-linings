@@ -11,7 +11,9 @@
 		{ key: 'photo', label: 'Photo', value: theme.photo },
 		{ key: 'text', label: 'Text', value: theme.text },
 		{ key: 'board', label: 'Board', value: theme.board },
-		{ key: 'memory', label: 'Memory', value: theme.memory }
+		{ key: 'memory', label: 'Memory', value: theme.memory },
+		{ key: 'sunsetPhoto', label: 'Sunset', value: theme.sunsetPhoto },
+		{ key: 'sky', label: 'Sky', value: theme.sky }
 	] as const);
 </script>
 

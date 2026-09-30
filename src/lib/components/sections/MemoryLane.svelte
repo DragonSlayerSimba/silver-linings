@@ -45,7 +45,7 @@
 				class="pointer-events-none absolute inset-x-0 top-3 border-t-2 border-dotted border-ink/25"
 				aria-hidden="true"
 			></div>
-			<ol class="flex snap-x gap-6 overflow-x-auto px-5 pt-0 pb-6 sm:px-8">
+			<ol class="flex snap-x strip-scroll gap-6 overflow-x-auto px-5 pt-0 pb-6 sm:px-8">
 				{#each cards as c, i (c.key)}
 					<li class="relative w-64 shrink-0 snap-start pt-8 sm:w-72">
 						<span
@@ -101,7 +101,9 @@
 						{/if}
 					</div>
 					{#if m.gallery}
-						<ul class="-mx-5 mt-6 flex snap-x gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8">
+						<ul
+							class="-mx-5 mt-6 flex snap-x strip-scroll gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8"
+						>
 							{#each m.gallery as g (g.file)}
 								{@const gsrc = photo('memory', g.file)}
 								{#if gsrc}

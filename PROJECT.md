@@ -142,9 +142,9 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 
 ### Open, in order
 
-1. **Phone navigation** — header nav is `hidden sm:flex` with nothing in its place. Menu button + sheet, or a bottom bar.
+1. ~~**Phone navigation**~~ — done 2026-09-30: dimmed icon-only links in the header for sections with `phoneIcon` in config (Menu, Events, Find us). Confirm by eye.
 2. **Theme lab picks** — accent / surface / header / photo / text / board / memory. Only brick accent is stated. Then `switcher: false` and delete the losers.
-3. **Mobile**: home page ~8,100px tall (shop cards, menu tile); 30px tap targets on chips and mood buttons; Theme lab should start collapsed on phones; Events eyebrow wraps.
+3. **Mobile**: Events and Made in Bir are sideways strips on phones (done 2026-09-30). Tap targets: user judged them fine. Theme lab: leave as is (dev only). Still open: menu tile height, Events eyebrow wrap.
 4. **Find Us**: a map where the gate photo was.
 5. **Content from the owners**: real food prices (drinks are real); originals of the 24 + 22 captured posts or an all-time Instagram export; the logo vector (the Instagram profile picture is the emblem); what happened Oct 2016 → Feb 2018; Artists' Market dates.
 6. **Rights**: the ten visitor photos in Moments need a yes from each poster before launch.
@@ -264,6 +264,11 @@ Config defaults in `theme.hero`; runtime choice in `theme.svelte.ts`; Header and
 
 ## Log
 
+- **2026-09-30** — Lab picks made config defaults (ochre surface, wood board, page sunset, drone sky; switcher stays on). GitHub Pages deploy prepared: `.github/workflows/deploy.yml` (BASE_PATH=/<repo>, robots blocked for the test copy), `paths.base` from `BASE_PATH` in vite.config, internal links via `resolve()`. Cloudflare/wrangler set-up was started then put on hold by the user.
+- **2026-09-30** — Moods cut to three: golden-hour (default; now the rain gradient (no streaks) under the sky photo, sun disc dropped), night, snow; sky photo blends over all of them in lab `Sunset: page`. Auto = night from 19:00 to 05:00, snow in Dec–Feb, else golden hour. Removed moods (greenery, rain, mist, silver-lining, first golden-hour) saved in `reources/dev/ambient-all-moods-2026-09-30.svelte`.
+- **2026-09-30** — Moods now: silver-lining (rain + sky photo, the user's pick, forced default while testing), greenery, rain, mist, golden-hour, sunset, night, snow. Auto order by hour/month in `season.svelte.ts`; hours in config. Night is a mid-tone dusk so ink text stays readable; a real dark night needs a dark content theme (undecided). Lab `Sunset: page` blends the sky photo over every mood (user's call).
+- **2026-09-30** — Mood discussion opened. Trial: sunset photos (`photos/mood/`, drone + two phone shots, picked by lab row `Sky`) with lab row `Sunset`: `page` (colour-blended behind the whole page, fades down) or `band` (full-bleed band before Find Us, tagline over it). Scrollbars on photo strips made thin (`strip-scroll`).
+- **2026-09-30** — Phone header nav: dimmed icons only (labels kept for screen readers) for sections with `phoneIcon` (new config field, `NavIcon.svelte`). Events and Shop become snap strips below `sm`, cards at 85% width so the next one peeks.
 - **2026-09-24** — Hero reverted to the five originals; menu photo picker built, used, and removed (original six kept). Memory Lane strip layout added.
 - **2026-09-24** — Export candidates wired into every section as placeholders to judge in place; review page at `reources/instagram-picks/index.html` for anything not yet placed.
 - **2026-09-24** — Section padding cut from 112px to 64px desktop / 48px phone; Find Us gate photo removed (duplicate of the hero slide; a map goes there later).

@@ -1,13 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	import config from '$config';
 	import { theme } from '$lib/theme.svelte';
+	import NavIcon from './NavIcon.svelte';
 
 	const nav = config.sections.filter((s) => s.enabled && s.navLabel);
+	// Phones get icons for the few sections that carry a phoneIcon; the rest are a scroll away.
+	const phoneNav = nav.filter((s) => s.phoneIcon);
 	// Section anchors only exist on the home page; elsewhere link back to it.
-	const home = $derived(page.url.pathname === '/');
-	const anchor = (id: string) => (home ? `#${id}` : `/#${id}`);
+	// resolve() adds the base path (e.g. /silver-linings on GitHub Pages).
+	const home = $derived(page.route.id === '/');
+	const anchor = (id: string) => (home ? `#${id}` : `${resolve('/')}#${id}`);
 
 	// Are we still over the hero? Switches the header from photo mode to bar mode.
 	let scrollY = $state(0);
@@ -69,6 +74,24 @@
 				</a>
 			{/each}
 		</nav>
+		{#if phoneNav.length}
+			<!-- Icons only, dimmed; the label is kept for screen readers. -->
+			<nav aria-label="Sections" class="-mr-2 flex gap-1 sm:hidden">
+				{#each phoneNav as s (s.id)}
+					<a
+						href={anchor(s.id)}
+						aria-label={s.navLabel}
+						title={s.navLabel}
+						class={[
+							'grid size-11 place-items-center rounded-full transition active:scale-95',
+							light ? 'text-cream/65 active:text-cream' : 'text-ink/45 active:text-accent'
+						]}
+					>
+						<NavIcon name={s.phoneIcon ?? ''} class="size-6" />
+					</a>
+				{/each}
+			</nav>
+		{/if}
 	</div>
 </header>
 

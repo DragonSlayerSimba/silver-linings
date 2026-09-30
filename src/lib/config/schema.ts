@@ -7,7 +7,7 @@ import { menuGroupSchema, menuTagSchema } from './menu-schema';
  * time so a typo fails the build instead of the page.
  */
 
-export const seasonSchema = z.enum(['greenery', 'rain', 'sunset']);
+export const seasonSchema = z.enum(['golden-hour', 'night', 'snow']);
 export type Season = z.infer<typeof seasonSchema>;
 
 export const sectionIdSchema = z.enum([
@@ -84,6 +84,13 @@ export type Board = z.infer<typeof boardSchema>;
 /** Memory Lane layout: a vertical timeline, or a horizontal strip of polaroids. */
 export const memoryLayoutSchema = z.enum(['strip', 'timeline']);
 export type MemoryLayout = z.infer<typeof memoryLayoutSchema>;
+
+/** Trial: the drone sunset photo as the page background in sunset mood, or as a full-width band. */
+export const sunsetPhotoSchema = z.enum(['off', 'page', 'band']);
+export type SunsetPhoto = z.infer<typeof sunsetPhotoSchema>;
+/** Which photo the sunset trial uses (files listed in src/lib/mood-photos.ts). */
+export const skySchema = z.enum(['drone', 'meadow', 'ember']);
+export type SkyName = z.infer<typeof skySchema>;
 export type Accent = z.infer<typeof accentSchema>;
 export type Surface = z.infer<typeof surfaceSchema>;
 
@@ -101,6 +108,8 @@ export const themeSchema = z
 		hero: heroLabSchema.default({ header: 'scrim', photo: 'natural', text: 'left' }),
 		board: boardSchema.default('slate'),
 		memory: memoryLayoutSchema.default('strip'),
+		sunsetPhoto: sunsetPhotoSchema.default('off'),
+		sky: skySchema.default('drone'),
 		/** Show the live theme switcher panel. Turn off before launch. */
 		switcher: z.boolean().default(false)
 	})
@@ -118,13 +127,16 @@ export const siteConfigSchema = z.object({
 	description: z.string().min(1),
 	locale: z.string().default('en-IN'),
 
-	/** Ambient background mood. 'auto' picks by month and hour on the visitor's clock. */
+	/**
+	 * Ambient background mood. 'auto' picks by month and hour on the visitor's clock
+	 * (night, then snow months, else golden hour); a mood name forces that one.
+	 */
 	season: z.object({
-		mode: z.union([z.literal('auto'), seasonSchema]).default('auto'),
-		/** Months (1–12) treated as monsoon when mode is 'auto'. */
-		rainMonths: z.array(z.number().int().min(1).max(12)).default([7, 8, 9]),
-		/** Hour (0–23, visitor's clock) from which 'auto' switches to sunset. */
-		sunsetFromHour: z.number().int().min(0).max(23).default(17)
+		mode: z.union([z.literal('auto'), seasonSchema]).default('golden-hour'),
+		/** Months (1–12) treated as snow season when mode is 'auto'. */
+		snowMonths: z.array(z.number().int().min(1).max(12)).default([12, 1, 2]),
+		/** Hour (0–23) from which 'auto' switches to night; night lasts until 5am. */
+		nightFromHour: z.number().int().min(0).max(23).default(19)
 	}),
 
 	palette: paletteSchema,
@@ -144,7 +156,12 @@ export const siteConfigSchema = z.object({
 				id: sectionIdSchema,
 				enabled: z.boolean().default(true),
 				/** Nav label; omit to keep the section out of the header nav. */
-				navLabel: z.string().optional()
+				navLabel: z.string().optional(),
+				/**
+				 * Icon for the phone header. Only sections with one appear there;
+				 * the rest are reached by scrolling. Keep it to three or four.
+				 */
+				phoneIcon: z.enum(['cup', 'calendar', 'pin', 'bag', 'camera', 'clock']).optional()
 			})
 		)
 		.min(1)

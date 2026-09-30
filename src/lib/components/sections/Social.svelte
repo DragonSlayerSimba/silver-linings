@@ -21,7 +21,9 @@
 			{/if}
 		</p>
 	{:else}
-		<div class="-mx-5 flex snap-x gap-5 overflow-x-auto px-5 pt-3 pb-6 sm:-mx-8 sm:px-8">
+		<div
+			class="-mx-5 flex snap-x strip-scroll gap-5 overflow-x-auto px-5 pt-3 pb-6 sm:-mx-8 sm:px-8"
+		>
 			{#each posts as post, i (post.image.file)}
 				<a
 					href={post.url}

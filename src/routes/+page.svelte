@@ -9,6 +9,8 @@
 	import Shop from '$lib/components/sections/Shop.svelte';
 	import Events from '$lib/components/sections/Events.svelte';
 	import FindUs from '$lib/components/sections/FindUs.svelte';
+	import MoodBand from '$lib/components/sections/MoodBand.svelte';
+	import { theme } from '$lib/theme.svelte';
 
 	// Section order and visibility come from site.config.ts.
 	const registry: Record<SectionId, Component> = {
@@ -26,5 +28,8 @@
 
 {#each sections as s (s.id)}
 	{@const Section = registry[s.id]}
+	{#if s.id === 'find-us' && theme.sunsetPhoto === 'band'}
+		<MoodBand />
+	{/if}
 	<Section />
 {/each}

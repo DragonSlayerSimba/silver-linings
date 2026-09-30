@@ -15,6 +15,8 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 			adapter: adapter(),
+			// Empty at a domain root; the GitHub Pages workflow sets BASE_PATH=/<repo>.
+			paths: { base: (process.env.BASE_PATH ?? '') as '' | `/${string}` },
 			alias: {
 				$config: 'site.config.ts',
 				$content: 'src/content'

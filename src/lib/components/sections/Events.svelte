@@ -9,16 +9,21 @@
 	eyebrow="Every day is an event when you believe in silver linings"
 	title="Events"
 >
-	<div class="grid gap-6 sm:grid-cols-2">
+	<!-- Phones: a sideways strip, next card peeking. sm and up: the grid. -->
+	<div
+		class="-mx-5 flex snap-x snap-mandatory scroll-px-5 strip-scroll gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0"
+	>
 		{#each events as ev (ev.title)}
 			{@const src = photo('events', ev.image?.file)}
-			<article class="overflow-hidden rounded-2xl border border-silver/70 bg-cream/40">
+			<article
+				class="w-[85%] shrink-0 snap-start overflow-hidden rounded-2xl border border-silver/70 bg-cream/40 sm:w-auto"
+			>
 				{#if src && ev.image}
 					<div class="relative">
 						<enhanced:img
 							{src}
 							alt={ev.image.alt}
-							sizes="(min-width: 640px) 50vw, 100vw"
+							sizes="(min-width: 640px) 50vw, 85vw"
 							class="aspect-[3/2] w-full object-cover"
 						/>
 						{#if ev.image.credit}

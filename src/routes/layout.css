@@ -96,6 +96,15 @@
 	}
 }
 
+/*
+ * Photo strips: the thin modern scrollbar in a faint ink tint instead of the
+ * chunky grey default desktop browsers draw on mouse-driven scroll areas.
+ */
+@utility strip-scroll {
+	scrollbar-width: thin;
+	scrollbar-color: color-mix(in oklab, var(--sl-ink) 22%, transparent) transparent;
+}
+
 /* The menu page doubles as the QR menu: print it clean. */
 @media print {
 	header,

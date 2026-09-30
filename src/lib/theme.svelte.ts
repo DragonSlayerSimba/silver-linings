@@ -6,7 +6,9 @@ import type {
 	HeroPhoto,
 	HeroText,
 	MemoryLayout,
-	Surface
+	SkyName,
+	Surface,
+	SunsetPhoto
 } from '$lib/config/schema';
 
 /**
@@ -25,7 +27,9 @@ const defaults = () => ({
 	photo: config.theme.hero.photo as HeroPhoto,
 	text: config.theme.hero.text as HeroText,
 	board: config.theme.board as Board,
-	memory: config.theme.memory as MemoryLayout
+	memory: config.theme.memory as MemoryLayout,
+	sunsetPhoto: config.theme.sunsetPhoto as SunsetPhoto,
+	sky: config.theme.sky as SkyName
 });
 type ThemeState = ReturnType<typeof defaults>;
 
@@ -55,6 +59,12 @@ export const theme = {
 	},
 	get memory() {
 		return state.memory;
+	},
+	get sunsetPhoto() {
+		return state.sunsetPhoto;
+	},
+	get sky() {
+		return state.sky;
 	},
 	get greenSet() {
 		return config.theme.greenSets[state.greens] ?? config.theme.greenSets[greenNames[0]];
@@ -107,5 +117,7 @@ export const options: Record<keyof ThemeState, string[]> = {
 	photo: ['natural', 'dark', 'tint'],
 	text: ['left', 'center', 'panel'],
 	board: ['slate', 'wood', 'none'],
-	memory: ['strip', 'timeline']
+	memory: ['strip', 'timeline'],
+	sunsetPhoto: ['off', 'page', 'band'],
+	sky: ['drone', 'meadow', 'ember']
 };

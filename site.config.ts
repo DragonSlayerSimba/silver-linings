@@ -13,9 +13,9 @@ export default defineSiteConfig({
 		'A hand-crafted mud cafe in Bir, Himachal Pradesh. Specialty coffee, hand-made desserts and a sanctuary from the storm.',
 
 	season: {
-		mode: 'auto',
-		rainMonths: [7, 8, 9],
-		sunsetFromHour: 17
+		mode: 'golden-hour', // auto | golden-hour | night | snow
+		snowMonths: [12, 1, 2],
+		nightFromHour: 19
 	},
 
 	// Sampled from photos of the cafe (see PROJECT.md §9), lifted a notch for screens.
@@ -41,7 +41,7 @@ export default defineSiteConfig({
 	// The three decisions we are testing by eye. Flip them live with the switcher.
 	theme: {
 		accent: 'brick', // brick | table | log
-		surface: 'cream', // cream | ochre | hybrid
+		surface: 'ochre', // cream | ochre | hybrid
 		greens: 'olive',
 		greenSets: {
 			olive: { moss: '#4d6a26', leaf: '#93a04a' }, // grass and shrubs in the photos
@@ -53,8 +53,10 @@ export default defineSiteConfig({
 			photo: 'natural', // natural | dark | tint
 			text: 'left' // left | center | panel
 		},
-		board: 'slate', // slate | wood | none — the chalkboard strip and icon discs in the menu
+		board: 'wood', // slate | wood | none — the chalkboard strip and icon discs in the menu
 		memory: 'strip', // strip | timeline — Memory Lane layout
+		sunsetPhoto: 'page', // off | page | band — trial of a sunset photo as background
+		sky: 'drone', // drone | meadow | ember — which sunset photo
 		switcher: true
 	},
 
@@ -73,12 +75,12 @@ export default defineSiteConfig({
 
 	sections: [
 		{ id: 'hero' },
-		{ id: 'menu', navLabel: 'Menu' },
+		{ id: 'menu', navLabel: 'Menu', phoneIcon: 'cup' },
 		{ id: 'memory-lane', navLabel: 'Memory lane' },
 		{ id: 'social', navLabel: 'Moments' },
 		{ id: 'shop', navLabel: 'Made in Bir' },
-		{ id: 'events', navLabel: 'Events' },
-		{ id: 'find-us', navLabel: 'Find us' }
+		{ id: 'events', navLabel: 'Events', phoneIcon: 'calendar' },
+		{ id: 'find-us', navLabel: 'Find us', phoneIcon: 'pin' }
 	],
 
 	// Menu presentation. The items themselves are in src/content/menu.ts.
