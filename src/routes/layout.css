@@ -1,0 +1,110 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/nunito-sans';
+@import '@fontsource-variable/caveat';
+
+/*
+ * Design tokens. Colours resolve to CSS variables that +layout.svelte sets
+ * on :root from site.config.ts, so the palette is edited in one place.
+ * Use them as Tailwind classes: bg-clay, text-ink, border-silver, font-display …
+ */
+@theme inline {
+	--color-clay: var(--sl-clay);
+	--color-wood: var(--sl-wood);
+	--color-brick: var(--sl-brick);
+	--color-periwinkle: var(--sl-periwinkle);
+	--color-moss: var(--sl-moss);
+	--color-leaf: var(--sl-leaf);
+	--color-sky: var(--sl-sky);
+	--color-sunset-from: var(--sl-sunset-from);
+	--color-sunset-to: var(--sl-sunset-to);
+	--color-silver: var(--sl-silver);
+	--color-table: var(--sl-table);
+	--color-log: var(--sl-log);
+	--color-cream: var(--sl-cream);
+	--color-ink: var(--sl-ink);
+	--color-slate: var(--sl-slate);
+	--color-chalk-pink: var(--sl-chalk-pink);
+	--color-chalk-yellow: var(--sl-chalk-yellow);
+	--color-chalk-green: var(--sl-chalk-green);
+	/* roles: resolved at runtime from the theme choice */
+	--color-accent: var(--sl-accent);
+	--color-surface: var(--sl-surface);
+
+	--font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+	--font-sans: 'Nunito Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	/* hand lettering, for chalkboard headings only */
+	--font-chalk: 'Caveat Variable', 'Segoe Script', cursive;
+
+	--ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+		-webkit-text-size-adjust: 100%;
+	}
+	body {
+		@apply bg-surface font-sans text-ink antialiased;
+	}
+	::selection {
+		background: color-mix(in oklab, var(--sl-silver) 60%, white);
+	}
+	h1,
+	h2,
+	h3 {
+		@apply font-display;
+		font-variation-settings:
+			'opsz' 72,
+			'SOFT' 50;
+	}
+}
+
+@utility container-sl {
+	@apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+/* A mud-wall band. Which sections get it depends on the surface choice. */
+@utility wall {
+	background: color-mix(in oklab, var(--sl-clay) 78%, var(--sl-cream));
+}
+
+/* Subtle paper grain over the whole page; sits above the ambient layer. */
+@utility grain {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* Dotted leader between a menu item and its price, like a printed menu. */
+@utility leader {
+	flex: 1 1 auto;
+	min-width: 1.5rem;
+	margin-inline: 0.5rem;
+	border-bottom: 2px dotted color-mix(in oklab, var(--sl-ink) 22%, transparent);
+	transform: translateY(-0.35em);
+}
+
+/* Horizontal chip rails scroll on phones without a visible scrollbar. */
+@utility rail {
+	display: flex;
+	gap: 0.5rem;
+	overflow-x: auto;
+	scrollbar-width: none;
+	-webkit-overflow-scrolling: touch;
+	scroll-snap-type: x proximity;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/* The menu page doubles as the QR menu: print it clean. */
+@media print {
+	header,
+	footer,
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: white !important;
+		color: black !important;
+	}
+}
