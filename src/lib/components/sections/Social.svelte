@@ -25,14 +25,12 @@
 			class="-mx-5 flex snap-x strip-scroll gap-5 overflow-x-auto px-5 pt-3 pb-6 sm:-mx-8 sm:px-8"
 		>
 			{#each posts as post, i (post.image.file)}
-				<a
-					href={post.url}
+				<!-- Cards don't link out: the handle credits the photographer, "More on Instagram" does the rest. -->
+				<figure
 					class={[
-						'polaroid w-60 shrink-0 snap-start transition hover:scale-[1.02] hover:rotate-0 sm:w-64',
+						'polaroid w-60 shrink-0 snap-start sm:w-64',
 						i % 3 === 0 ? 'rotate-1' : i % 3 === 1 ? '-rotate-1' : 'rotate-[0.5deg]'
 					]}
-					target="_blank"
-					rel="noopener"
 				>
 					<enhanced:img
 						src={post.src}
@@ -42,15 +40,18 @@
 						loading="lazy"
 						decoding="async"
 					/>
-					<div class="flex items-baseline justify-between gap-2 px-2 pt-2">
+					<figcaption class="flex items-baseline justify-between gap-2 pt-2 pl-2">
 						{#if post.caption}
 							<p class="truncate text-sm text-ink/70">{post.caption}</p>
 						{/if}
 						{#if post.handle}
-							<p class="ml-auto shrink-0 font-chalk text-base text-ink/60">@{post.handle}</p>
+							<!-- Long handles are cut short so the caption keeps its room. -->
+							<p class="ml-auto max-w-[55%] shrink-0 truncate font-chalk text-base text-ink/60">
+								@{post.handle}
+							</p>
 						{/if}
-					</div>
-				</a>
+					</figcaption>
+				</figure>
 			{/each}
 		</div>
 		{#if config.contact.instagram}

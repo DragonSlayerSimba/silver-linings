@@ -8,7 +8,7 @@ import { defineSiteConfig } from './src/lib/config/schema';
 export default defineSiteConfig({
 	name: 'Silver Linings',
 	shortName: 'Silver Linings',
-	url: 'https://silverliningscafe.site',
+	url: 'https://silverlinings.cafe',
 	description:
 		'A hand-crafted mud cafe in Bir, Himachal Pradesh. Specialty coffee, hand-made desserts and a sanctuary from the storm.',
 	founded: 2016, // "since 2016" on the counter logo

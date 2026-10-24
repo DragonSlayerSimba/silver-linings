@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://silverliningscafe.site/sitemap.xml
+Sitemap: https://silverlinings.cafe/sitemap.xml

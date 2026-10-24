@@ -1,5 +1,7 @@
 # Builds the static site and publishes it to GitHub Pages on every push to main.
-# One-time setup on github.com: Settings → Pages → Source: "GitHub Actions".
+# Production: https://silverlinings.cafe (Settings → Pages → Source "GitHub Actions",
+# Custom domain "silverlinings.cafe", Enforce HTTPS). The site is built for the domain
+# root, so the old project-pages URL only works as a redirect to the domain.
 name: Deploy to GitHub Pages
 
 on:
@@ -27,12 +29,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-        env:
-          # Project pages live at https://<user>.github.io/<repo>/
-          BASE_PATH: /${{ github.event.repository.name }}
-      # Test copy: keep it out of search engines until launch.
-      - name: Block search engines
-        run: "printf 'User-agent: *\\nDisallow: /\\n' > build/robots.txt"
       - uses: actions/upload-pages-artifact@v4
         with:
           path: build
