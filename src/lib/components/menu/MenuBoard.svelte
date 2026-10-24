@@ -5,6 +5,7 @@
 	import { groups, visibleItems, tagLabel, boardClasses } from '$lib/menu';
 	import { theme } from '$lib/theme.svelte';
 	import CategoryIcon from './CategoryIcon.svelte';
+	import MenuArt, { afterText, hasArt } from './MenuArt.svelte';
 	import MenuItemRow from './MenuItemRow.svelte';
 
 	/**
@@ -18,6 +19,8 @@
 	const chipOn = 'border-accent bg-accent text-cream';
 
 	const b = $derived(boardClasses(theme.board));
+	/** Theme lab → Menu art 'beside': the heading row leaves room for a drawing on its right. */
+	const artBeside = (icon: string) => theme.menuArt === 'beside' && hasArt(icon);
 
 	let groupIndex = $state(0);
 	let filter = $state<MenuTag | null>(null);
@@ -68,6 +71,11 @@
 		if (!railEl || !activeCategory) return;
 		const chip = railEl.querySelector<HTMLElement>(`[data-cat="${activeCategory}"]`);
 		if (!chip) return;
+		// Nothing to do while the chip is fully in view; a needless smooth scroll on
+		// page load counts as a scroll and makes the browser stop measuring LCP.
+		const from = railEl.scrollLeft;
+		const to = from + railEl.clientWidth;
+		if (chip.offsetLeft >= from && chip.offsetLeft + chip.clientWidth <= to) return;
 		const left = chip.offsetLeft - railEl.clientWidth / 2 + chip.clientWidth / 2;
 		railEl.scrollTo({ left, behavior: 'smooth' });
 	});
@@ -85,6 +93,20 @@
 </script>
 
 <svelte:window onscroll={spy} />
+
+<!-- Shared filter for the chalk art style (MenuArt.svelte): a faint displacement roughens the strokes. -->
+<svg class="absolute size-0" aria-hidden="true" focusable="false">
+	<filter id="sl-chalk-rough" x="-5%" y="-5%" width="110%" height="110%">
+		<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n" />
+		<feDisplacementMap
+			in="SourceGraphic"
+			in2="n"
+			scale="1.6"
+			xChannelSelector="R"
+			yChannelSelector="G"
+		/>
+	</filter>
+</svg>
 
 <!-- Chalkboard strip: the three boards as tabs -->
 <div
@@ -164,20 +186,33 @@
 
 {#each boards as board, i (board.id)}
 	<div class={['mt-6 gap-x-12 lg:columns-2', i !== groupIndex && 'hidden print:block']}>
-		<h2 class="mb-6 hidden font-chalk text-4xl print:block">{board.label}</h2>
+		<!-- Board name: read by screen readers and printed, so headings run h1 → h2 → h3 on screen too. -->
+		<h2 class="sr-only mb-6 font-chalk text-4xl print:not-sr-only print:block">{board.label}</h2>
 		{#each board.categories as c (c.id)}
+			{@const inline = theme.menuArt !== 'off' && afterText(c.icon)}
 			<section
 				id={c.id}
-				class="mb-12 scroll-mt-40 break-inside-avoid"
+				class="relative mb-12 scroll-mt-40 break-inside-avoid"
 				aria-labelledby={`${c.id}-h`}
 			>
-				<h3 id={`${c.id}-h`} class="flex items-center gap-3">
-					<span class={['grid size-11 shrink-0 place-items-center rounded-full', b.disc]}>
-						<CategoryIcon name={c.icon} class="text-[1.15em]" />
-					</span>
-					<span class="font-chalk text-4xl leading-none text-ink">{c.title}</span>
-				</h3>
-				{#if c.blurb}<p class="mt-2 ml-14 text-sm text-ink/60">{c.blurb}</p>{/if}
+				{#if !inline}<MenuArt name={c.icon} />{/if}
+				<div
+					class={[
+						artBeside(c.icon) && 'min-h-20 pr-24 sm:min-h-24 sm:pr-28',
+						inline && 'flex items-start gap-2'
+					]}
+				>
+					<div>
+						<h3 id={`${c.id}-h`} class="flex items-center gap-3">
+							<span class={['grid size-11 shrink-0 place-items-center rounded-full', b.disc]}>
+								<CategoryIcon name={c.icon} class="text-[1.15em]" />
+							</span>
+							<span class="font-chalk text-4xl leading-none text-ink">{c.title}</span>
+						</h3>
+						{#if c.blurb}<p class="mt-2 ml-14 text-sm text-ink/60">{c.blurb}</p>{/if}
+					</div>
+					{#if inline}<MenuArt name={c.icon} inline />{/if}
+				</div>
 				{#each sections(c) as s, j (s.title ?? j)}
 					{#if s.title}
 						<p class="mt-5 mb-1 font-chalk text-xl text-accent">{s.title}</p>

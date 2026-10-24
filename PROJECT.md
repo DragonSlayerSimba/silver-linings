@@ -59,6 +59,10 @@ Three moods, selectable in config (auto by date/time, or forced):
 
 ### Logo concepts (no files yet; draft as SVG)
 
+- 2026-10-24 — SEO and launch plumbing. Head now carries canonical (production URL, built from the route id), Open Graph and Twitter cards with `static/og.jpg` (1200×630, the interior with the name centred and "Every cloud hides a spark" in chalk; chosen from eight layouts in `reources/dev/og-options/`, source `reources/dev/og-image.html`), SVG favicon (a cloud with its silver lining, replacing the Svelte logo), apple-touch-icon, web manifest, and JSON-LD `CafeOrCoffeeShop` from `src/lib/seo.ts` (address, geo from the old site's map embed, hours, phone, Instagram, menu link, price range computed from the menu, founded 2016). `sitemap.xml` is a prerendered endpoint and robots.txt points at it. `/404` prerenders to `404.html` for GitHub Pages and Cloudflare; `+error.svelte` shows the same page client-side. Every below-the-fold photo is `loading="lazy" decoding="async"`; the first hero AVIF is preloaded. Accessibility: the counter tile's aria-label is gone (visible text is the name), chip links are taller. `static/_headers` carries security headers for Cloudflare. Not done, needs a decision: analytics (Cloudflare Web Analytics suggested); owner should align the Google Business Profile hours, phone and website with the site. Lighthouse on `vite preview` (uncompressed, so pessimistic), home page: mobile 86 / 95 / 100 / 100 (was 75; LCP 8.0 s → 3.5 s, first load 2.7 MB → 1.4 MB once hero slides mount one at a time and photos lazy-load), desktop 100 / 95 / 100 / 100. The remaining accessibility point is colour contrast of tinted small text (ink/45–75) and the brick eyebrows on the ochre surface, a design decision for the owner; the remaining mobile performance is render-blocking CSS and fonts. Menu page: mobile 90 / 95 / 100 / 100 once the category rail stopped smooth-scrolling on load (a compositor scroll made Chrome stop measuring LCP, so Lighthouse reported NO_LCP) and the board name became an sr-only h2 so headings run h1 → h2 → h3.
+
+- 2026-10-24 — Menu page art in the Theme lab. Four new rows: **Menu art** (off / beside / behind / all), **Behind** (mixed / right / big / left — watermark size and side; mixed = coffee and eggs inline right after the heading text, cookie bottom-left of Bakes, rest top right), **Art style** (chalk / ink), **Art motion** (draw / loop / still), **Menu bg** (sky / paper). `MenuArt.svelte` holds seven 120×120 line drawings (fried egg on a plate, pancake stack, a side-view sandwich, pizza slice, ceramic coffee cup, a tall glass for Coolers, cake wedge, cookie for the Cookies category) keyed like `CategoryIcon`; 'all' reuses the small icons as faint watermarks. `motion/draw.ts` measures stroke lengths on first view and drives a stroke-dashoffset draw-on, then one small loop per drawing (yolk wobble, syrup drip, steam, bubbles, berry bob), paused off-screen, off under reduced motion and in print. 'paper' drops the sky photo on /menu only. Chosen 2026-10-24: behind / mixed / ink / draw / paper, now the config defaults.
+
 1. **The Clay Cup & Cloud** — rustic textured terracotta cup silhouette; steam rises into a soft dark storm-cloud outlined with a sharp, clean silver stroke.
 2. **The Golden/Silver Hour Monogram** — circular emblem: silhouette of the mud building among trees, framed in a split crescent, half organic moss texture, half sleek silver.
 
@@ -82,7 +86,7 @@ Three moods, selectable in config (auto by date/time, or forced):
 - **Hours:** 09:00–19:00, closed Wednesdays
 - **Phone:** +91 83509 74903
 - **Domain:** silverliningscafe.site
-- **Menu categories:** Bakes & Desserts (Banoffee Pie ₹180, Cocoa Mud Cups ₹150, Pancakes ₹130–170), Coffee & Teas (Espresso ₹80–110, Cappuccino ₹120, Masala Chai ₹60), Smoothies & Juices (₹150–180), Breakfast (eggs ₹100–150), Starters (Momos ₹100–180, Spring rolls ₹120–150), Mains (Burgers ₹100–150, Pizzas ₹220–270, Pasta ₹150, Noodles ₹130–150)
+- **Menu:** `src/content/menu.ts`, transcribed from the chalkboards photographed 2026-10-12 (photos + transcription in `reources/menu-boards-2026-10-12/`). The old site's categories (momos, spring rolls, noodles) are not on the boards any more.
 
 ---
 
@@ -148,9 +152,14 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - Lab picks made defaults: brick, ochre, scrim, natural, left, wood, strip, page, drone. Theme lab now shows only on `npm run dev`.
 - **Live test copy:** https://dragonslayersimba.github.io/silver-linings/ from github.com/DragonSlayerSimba/silver-linings (public). Every push to main deploys via `.github/workflows/deploy.yml`; Pages source must be "GitHub Actions". robots blocked on this copy.
 
+### Session 4 (2026-10-16) — real menu
+
+- Three chalkboard photos (2026-10-12) transcribed; `menu.ts` rewritten with real prices for everything. New: Fresh Juices category (`juices`, icon `juice`), Besan and Ragi Cheela, Ragi Pancake, Aglio e Olio, 17 coffees (cold ones under a `Cold` subgroup), Chai, Matcha hot/iced, Iced Vietnamese; pizza is now make-your-own by size (8/10/12″) plus the Margherita offer. Dropped: Mint Tea, Garden Veg and Mushroom & Corn pizzas, Cold Brew. Variant prices now print their labels ("8″ ₹280 / 10″ ₹380"). `menu.lastVerified` set to 2026-10-12.
+- Five unclear readings were confirmed by the owner on 2026-10-22: Poached Egg and French Omelette removed, 8″ pizza 280, shakes as "Banana / Mango ₹150" and "Strawberry ₹200" on separate lines, extra hummus 70. Price variants now stack one per line on the menu page.
+
 ### Open, for the final session (bring the final resources)
 
-1. **Content from the owners**: real food prices (drinks are real); originals of the captured posts or a full Instagram export; the logo vector; what happened Oct 2016 → Feb 2018; Artists' Market dates.
+1. **Content from the owners**: a reflection-free counter photo; originals of the captured posts or a full Instagram export; the logo vector; what happened Oct 2016 → Feb 2018; Artists' Market dates; prices for the shelf items without a label (teas, sea buckthorn, porridge, painted magnets, cards).
 2. **Rights**: the ten visitor photos in Moments need a yes from each poster (they are public on the test copy now), or hide Moments.
 3. **Mood photos**: full-size originals of the meadow and ember sunsets (current copies are WhatsApp-compressed); photos for night and snow if they should get their own sky. Decide whether night needs a real dark theme.
 4. **Mood ideas discussed, not chosen**: "Bir right now" (IST clock, real sunset time, live Open-Meteo weather), per-mood tagline / status line / menu pick, scroll-through-a-day.
@@ -274,8 +283,21 @@ Config defaults in `theme.hero`; runtime choice in `theme.svelte.ts`; Header and
 - There is an "OPEN" sign and a GST number on the gate; the entrance is a slate-roofed wooden arch with the name board. Strong hero image candidate.
 - All photos are overcast; we still need golden-hour and rain shots for the sunset and rain moods, and interior shots with lights on.
 
+### Session 5 (2026-10-22) — owner's answers, new photos
+
+- Menu: five readings confirmed (see Log). Bakes rewritten from the counter labels photographed today: ten cakes and pies at today's prices, all eggless except the brownie, all with butter; Tea Cake dropped; Mangoffee and Strawberry kept as seasonal. Price variants stack one per line.
+- Counter tile on the home page now uses today's counter photo (cakes on three shelves with baker labels). The owner will bring a reflection-free one later; the old tile is in `reources/dev/replaced/`.
+- Double rainbow (Dec 2021): the last Memory Lane card ("Storm passes", December 2021), a portrait polaroid framed by the owner in `reources/dev/frame/index.html` (crop 1689×2111 at x 1019, contrast 1.6, saturation 2.2) so both bows and the cafe fit. Tried as a sky option (alone and over the drone shot); the owner kept the drone sky as it was, so the option is removed. The 2021 master-chef photo was dropped from the gate card (in `reources/dev/replaced/`).
+- Events cut to two cards: Artists' Market (colourmejewels stall story, cafe repost) and "Music, any and all the time" (musician on the terrace, the cafe's own story). The 2018 talk photo is in `reources/dev/replaced/`.
+- Made in Bir is now two cards in the Events style (`ShopGroup` in `shop.ts`: photo, title, description): **Local produce** (Kangra Bliss teas, sea buckthorn pulp from Kangra Bliss / ReNyuLife, Ney Thuk porridge) and **Artists** (Bir Clay Studio clay magnets ₹300, 3D-printed bookmarks ₹350 by Red Kite Studio, hand-painted magnets by Laxmi Thapa and Tanvi Mistry, Ankita's art cards). Photos are the owner's staged shots from 12:37 today. Pickles and postcards removed (not on the shelf; files in `reources/dev/replaced/`).
+- The shelf photos also show the drinks board; it matches the 2026-10-12 transcription.
+
 ## Log
 
+- **2026-10-22** — From the owner's picks: the dusk shot of the lit cafe (travleensekhon) is the last Memory Lane card "Lights on" (Oct 2025; tried as a sky option, drone kept); pilots' season (own post, October, year unknown) is the last Moments card; the 2021 gate-sign print removed (the from-above photo carries that card); unboundink's terrace watercolour is a Moments card. Picker pages: `instagram-picks/picks-2026-10-22.html` (53 proposed) and `commented-2026-10-22.html`.
+- **2026-10-22** — New photos from the owner: counter (bakes prices), double rainbow, six Made in Bir shelf photos. Bakes, shop, events, memory lane and the counter tile rebuilt from them; rainbow added as a sky option.
+- **2026-10-22** — Owner confirmed the five menu readings: Poached Egg and French Omelette dropped, 8″ pizza 280, shakes split into Banana / Mango 150 and Strawberry 200, extra hummus 70. `MenuItemRow` stacks named price variants one per line.
+- **2026-10-16** — Menu rebuilt from the 2026-10-12 chalkboard photos: real food prices throughout, Fresh Juices added, pizza restructured as make-your-own sizes, coffee list completed. Five unclear readings left as `VERIFY` comments for the owner. `check`, `lint`, `build` clean.
 - **2026-09-30** — Lab picks made config defaults (ochre surface, wood board, page sunset, drone sky; switcher stays on). GitHub Pages deploy prepared: `.github/workflows/deploy.yml` (BASE_PATH=/<repo>, robots blocked for the test copy), `paths.base` from `BASE_PATH` in vite.config, internal links via `resolve()`. Cloudflare/wrangler set-up was started then put on hold by the user.
 - **2026-09-30** — Moods cut to three: golden-hour (default; now the rain gradient (no streaks) under the sky photo, sun disc dropped), night, snow; sky photo blends over all of them in lab `Sunset: page`. Auto = night from 19:00 to 05:00, snow in Dec–Feb, else golden hour. Removed moods (greenery, rain, mist, silver-lining, first golden-hour) saved in `reources/dev/ambient-all-moods-2026-09-30.svelte`.
 - **2026-09-30** — Moods now: silver-lining (rain + sky photo, the user's pick, forced default while testing), greenery, rain, mist, golden-hour, sunset, night, snow. Auto order by hour/month in `season.svelte.ts`; hours in config. Night is a mid-tone dusk so ink text stays readable; a real dark night needs a dark content theme (undecided). Lab `Sunset: page` blends the sky photo over every mood (user's call).

@@ -2,11 +2,16 @@ import { dev } from '$app/environment';
 import config from '$config';
 import type {
 	Accent,
+	ArtBehind,
+	ArtMotion,
+	ArtStyle,
 	Board,
 	HeroHeader,
 	HeroPhoto,
 	HeroText,
 	MemoryLayout,
+	MenuArt,
+	MenuBg,
 	SkyName,
 	Surface,
 	SunsetPhoto
@@ -36,7 +41,12 @@ const defaults = () => ({
 	board: config.theme.board as Board,
 	memory: config.theme.memory as MemoryLayout,
 	sunsetPhoto: config.theme.sunsetPhoto as SunsetPhoto,
-	sky: config.theme.sky as SkyName
+	sky: config.theme.sky as SkyName,
+	menuArt: config.theme.menuArt as MenuArt,
+	artBehind: config.theme.artBehind as ArtBehind,
+	artStyle: config.theme.artStyle as ArtStyle,
+	artMotion: config.theme.artMotion as ArtMotion,
+	menuBg: config.theme.menuBg as MenuBg
 });
 type ThemeState = ReturnType<typeof defaults>;
 
@@ -72,6 +82,21 @@ export const theme = {
 	},
 	get sky() {
 		return state.sky;
+	},
+	get menuArt() {
+		return state.menuArt;
+	},
+	get artBehind() {
+		return state.artBehind;
+	},
+	get artStyle() {
+		return state.artStyle;
+	},
+	get artMotion() {
+		return state.artMotion;
+	},
+	get menuBg() {
+		return state.menuBg;
 	},
 	get greenSet() {
 		return config.theme.greenSets[state.greens] ?? config.theme.greenSets[greenNames[0]];
@@ -126,5 +151,10 @@ export const options: Record<keyof ThemeState, string[]> = {
 	board: ['slate', 'wood', 'none'],
 	memory: ['strip', 'timeline'],
 	sunsetPhoto: ['off', 'page', 'band'],
-	sky: ['drone', 'meadow', 'ember']
+	sky: ['drone', 'meadow', 'ember'],
+	menuArt: ['off', 'beside', 'behind', 'all'],
+	artBehind: ['mixed', 'right', 'big', 'left'],
+	artStyle: ['chalk', 'ink'],
+	artMotion: ['draw', 'loop', 'still'],
+	menuBg: ['sky', 'paper']
 };

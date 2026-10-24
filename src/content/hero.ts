@@ -18,6 +18,5 @@ export const heroImages: HeroImage[] = [
 		alt: 'Terrace benches against the ochre mud wall',
 		position: '50% 50%'
 	},
-	{ file: '04-interior.jpg', alt: 'Cane chairs and a window onto the garden', position: '50% 50%' },
-	{ file: '05-counter.jpg', alt: 'The dessert counter under the slate roof', position: '50% 50%' }
+	{ file: '04-interior.jpg', alt: 'Cane chairs and a window onto the garden', position: '50% 50%' }
 ];

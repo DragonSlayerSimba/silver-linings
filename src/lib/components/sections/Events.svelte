@@ -25,6 +25,8 @@
 							alt={ev.image.alt}
 							sizes="(min-width: 640px) 50vw, 85vw"
 							class="aspect-[3/2] w-full object-cover"
+							loading="lazy"
+							decoding="async"
 						/>
 						{#if ev.image.credit}
 							<span class="absolute right-3 bottom-2 font-chalk text-base text-cream/90 drop-shadow"

@@ -39,6 +39,8 @@
 						alt={post.image.alt}
 						sizes="16rem"
 						class="aspect-[4/5] w-full object-cover"
+						loading="lazy"
+						decoding="async"
 					/>
 					<div class="flex items-baseline justify-between gap-2 px-2 pt-2">
 						{#if post.caption}

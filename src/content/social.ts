@@ -27,12 +27,6 @@ export const socialPosts: SocialPost[] = [
 	},
 	{
 		platform: 'instagram',
-		url: ig('thefoodessence'),
-		handle: 'thefoodessence',
-		image: { file: 'pizza.jpg', alt: 'A whole pizza on a wooden board' }
-	},
-	{
-		platform: 'instagram',
 		url: ig('vanikasangtani'),
 		handle: 'vanikasangtani',
 		image: {
@@ -40,6 +34,22 @@ export const socialPosts: SocialPost[] = [
 			alt: 'Banana and chocolate pancakes held up in the garden'
 		},
 		caption: 'Kisi ne banana pancake order kia tha?'
+	},
+	{
+		platform: 'instagram',
+		url: ig('silver_linings_bir'),
+		handle: 'silver_linings_bir',
+		image: {
+			file: 'flying-season.jpg',
+			alt: 'Paraglider packs piled on the grass, pilots resting on the porch of the stone room'
+		},
+		caption: 'October: the landing site empties into the garden.'
+	},
+	{
+		platform: 'instagram',
+		url: ig('thefoodessence'),
+		handle: 'thefoodessence',
+		image: { file: 'pizza.jpg', alt: 'A whole pizza on a wooden board' }
 	},
 	{
 		platform: 'instagram',
@@ -75,12 +85,6 @@ export const socialPosts: SocialPost[] = [
 	},
 	{
 		platform: 'instagram',
-		url: ig('thefoodessence'),
-		handle: 'thefoodessence',
-		image: { file: 'interior.jpg', alt: 'The counter and chalkboards inside the cafe' }
-	},
-	{
-		platform: 'instagram',
 		url: ig('vanikasangtani'),
 		handle: 'vanikasangtani',
 		image: { file: 'banoffee-hand.jpg', alt: 'A slice of banoffee pie held up in the garden' },
@@ -88,8 +92,12 @@ export const socialPosts: SocialPost[] = [
 	},
 	{
 		platform: 'instagram',
-		url: ig('silver_linings_bir'),
-		image: { file: 'gate-cute.jpg', alt: 'The gate sign seen from the lane' },
-		caption: 'Cafes in Bir are dam cute.'
+		url: ig('unboundink'),
+		handle: 'unboundink',
+		image: {
+			file: 'watercolour-terrace.jpg',
+			alt: 'Watercolour of four people at a table on the terrace under the yellow wall and slate roof'
+		},
+		caption: 'Painted at the table.'
 	}
 ];

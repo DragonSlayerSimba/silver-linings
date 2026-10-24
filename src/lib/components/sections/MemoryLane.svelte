@@ -58,6 +58,8 @@
 								alt={c.image.alt}
 								sizes="18rem"
 								class="aspect-[4/5] w-full object-cover"
+								loading="lazy"
+								decoding="async"
 							/>
 							<figcaption class="flex items-baseline justify-between gap-2 px-1 pt-2">
 								<span class="font-chalk text-lg text-ink/80">{c.when}</span>
@@ -91,6 +93,8 @@
 									alt={m.image.alt}
 									sizes="(min-width: 1024px) 22rem, 100vw"
 									class="aspect-[4/5] w-full object-cover"
+									loading="lazy"
+									decoding="async"
 								/>
 								{#if m.image.credit}
 									<figcaption class="px-2 pt-2 text-right font-chalk text-base text-ink/60">
@@ -113,6 +117,8 @@
 											alt={g.alt}
 											sizes="15rem"
 											class="aspect-[4/5] w-full object-cover"
+											loading="lazy"
+											decoding="async"
 										/>
 										{#if g.credit}
 											<p class="px-2 pt-2 text-right font-chalk text-sm text-ink/60">@{g.credit}</p>

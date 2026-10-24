@@ -7,7 +7,7 @@
 const pictures = import.meta.glob('/src/lib/assets/photos/{memory,events,social,shop}/*.jpg', {
 	eager: true,
 	import: 'default',
-	query: { enhanced: true, w: '480;960;1440' }
+	query: { enhanced: true, w: '480;720;960;1440' }
 }) as Record<string, string>;
 
 export type Section = 'memory' | 'events' | 'social' | 'shop';

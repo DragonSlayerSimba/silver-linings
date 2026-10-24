@@ -57,9 +57,18 @@
 		</span>
 		{#if showPrice}
 			<span class="leader" aria-hidden="true"></span>
-			<span class="text-sm whitespace-nowrap text-ink/75 tabular-nums"
-				>{priceLabel(item.price)}</span
-			>
+			{#if Array.isArray(item.price)}
+				<!-- Named variants stack, one option per line. -->
+				<span class="flex flex-col items-end text-sm text-ink/75 tabular-nums">
+					{#each item.price as v (v.label)}
+						<span class="whitespace-nowrap">{v.label} {rupees(v.price)}</span>
+					{/each}
+				</span>
+			{:else}
+				<span class="text-sm whitespace-nowrap text-ink/75 tabular-nums"
+					>{priceLabel(item.price)}</span
+				>
+			{/if}
 		{/if}
 	</div>
 	{#if item.ingredients?.length}

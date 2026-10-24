@@ -40,12 +40,11 @@ export interface SocialPost {
 	caption?: string;
 }
 
-export interface ShopItem {
-	name: string;
-	price?: Money;
+/** A shelf by the counter: one photo, a title and a few lines on what is there. */
+export interface ShopGroup {
+	title: string;
 	description: string;
-	maker?: string;
-	image?: Photo;
+	image: Photo;
 }
 
 export interface HeroImage {

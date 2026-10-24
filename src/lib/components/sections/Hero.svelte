@@ -9,14 +9,20 @@
 	const pictures = import.meta.glob('/src/lib/assets/photos/hero/*.jpg', {
 		eager: true,
 		import: 'default',
-		query: { enhanced: true, w: '640;1280;1920' }
+		query: { enhanced: true, w: '640;960;1280;1920' }
 	}) as Record<string, string>;
 	const slides = heroImages
 		.map((h) => ({ ...h, src: pictures[`/src/lib/assets/photos/hero/${h.file}`] }))
 		.filter((s) => s.src);
+	// The first slide is the LCP image: preload its AVIF set so the browser asks for it before CSS lands.
+	const first = slides[0]?.src as unknown as { sources?: { avif?: string } } | undefined;
+	const preload = first?.sources?.avif;
 
 	let index = $state(0);
 	let slide = $state(0);
+	// Slides are mounted one at a time, each a moment before its turn, so only the first
+	// photo is fetched on page load (hidden but in-viewport images are not lazy-loaded).
+	let mounted = $state(1);
 	const tagline = $derived(config.taglines[index]);
 
 	onMount(() => {
@@ -30,16 +36,23 @@
 			);
 		}
 		if (slides.length > 1) {
+			const every = config.heroImageIntervalSeconds * 1000;
+			timers.push(setInterval(() => (slide = (slide + 1) % slides.length), every));
+			// Mount the next slide 2.5 s ahead so it has decoded before the crossfade.
 			timers.push(
-				setInterval(
-					() => (slide = (slide + 1) % slides.length),
-					config.heroImageIntervalSeconds * 1000
-				)
+				setInterval(() => (mounted = Math.min(slides.length, mounted + 1)), every),
+				setTimeout(() => (mounted = Math.min(slides.length, 2)), Math.max(0, every - 2500))
 			);
 		}
 		return () => timers.forEach(clearInterval);
 	});
 </script>
+
+<svelte:head>
+	{#if preload}
+		<link rel="preload" as="image" imagesrcset={preload} imagesizes="100vw" type="image/avif" />
+	{/if}
+</svelte:head>
 
 <section
 	id="hero"
@@ -55,7 +68,7 @@
 >
 	<!-- Photo layer -->
 	<div class="absolute inset-0" aria-hidden="true">
-		{#each slides as s, i (s.file)}
+		{#each slides.slice(0, mounted) as s, i (s.file)}
 			<div
 				class="absolute inset-0 transition-opacity duration-[1600ms] ease-soft"
 				class:opacity-0={i !== slide}

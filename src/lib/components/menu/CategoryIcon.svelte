@@ -77,12 +77,22 @@
 		<path d="M7.6 11h8.8" />
 		<circle class="bubble b1" cx="10.5" cy="16" r="0.9" />
 		<circle class="bubble b2" cx="13" cy="14" r="0.7" />
+	{:else if name === 'juice'}
+		<path d="M8 4h8l-1 16H9z" />
+		<path d="M7.5 9h9" />
+		<path d="M15 3l3-1.5" />
+		<circle cx="19.5" cy="4.5" r="1.3" />
+		<circle class="bubble b1" cx="11" cy="15" r="0.8" />
+		<circle class="bubble b2" cx="13.5" cy="12.5" r="0.7" />
 	{:else if name === 'smoothie'}
 		<path d="M6 5h12l-1.5 15h-9z" />
 		<path d="M14 2.5 16 6" />
 		<path d="M7 10c1.5-1 3.3-1 5 0s3.5 1 5 0" />
 		<circle class="bubble b1" cx="10" cy="15.5" r="0.8" />
 		<circle class="bubble b2" cx="13.5" cy="13.5" r="0.7" />
+	{:else if name === 'cookie'}
+		<path d="M19.5 9.5A8 8 0 1 0 21 13a3 3 0 0 1-1.5-3.5z" />
+		<path d="M9 9h.01M14 11h.01M10 14h.01M14 15h.01" stroke-width="2" />
 	{:else if name === 'cake'}
 		<path d="M4 12 12 4l8 8v8H4z" />
 		<path d="M4 16h16" />

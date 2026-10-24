@@ -91,6 +91,25 @@ export type SunsetPhoto = z.infer<typeof sunsetPhotoSchema>;
 /** Which photo the sunset trial uses (files listed in src/lib/mood-photos.ts). */
 export const skySchema = z.enum(['drone', 'meadow', 'ember']);
 export type SkyName = z.infer<typeof skySchema>;
+/** Illustrations on the full menu page. off: icons only. beside: a bespoke drawing beside the heading of
+ *  Eggs, Pancakes, Pizza, Coffee, Juices and Bakes. behind: the same six, large and dimmed, behind the
+ *  list. all: every category gets a dimmed watermark (the small icon where there is no drawing). */
+export const menuArtSchema = z.enum(['off', 'beside', 'behind', 'all']);
+export type MenuArt = z.infer<typeof menuArtSchema>;
+/** Where a 'behind' / 'all' watermark sits. mixed: each drawing's own place (coffee big off the left,
+ *  eggs and sandwich off the left, the rest top right). right: all large top right. big: larger top right.
+ *  left: all medium, bleeding off the left edge of the column. */
+export const artBehindSchema = z.enum(['mixed', 'right', 'big', 'left']);
+export type ArtBehind = z.infer<typeof artBehindSchema>;
+/** chalk: rough pencil strokes in ink. ink: clean accent-coloured lines with light colour fills. */
+export const artStyleSchema = z.enum(['chalk', 'ink']);
+export type ArtStyle = z.infer<typeof artStyleSchema>;
+/** draw: strokes draw on when scrolled into view, then a small loop. loop: loop only. still: no motion. */
+export const artMotionSchema = z.enum(['draw', 'loop', 'still']);
+export type ArtMotion = z.infer<typeof artMotionSchema>;
+/** Backdrop of the menu page: the same sky photo as the home page, or plain paper. */
+export const menuBgSchema = z.enum(['sky', 'paper']);
+export type MenuBg = z.infer<typeof menuBgSchema>;
 export type Accent = z.infer<typeof accentSchema>;
 export type Surface = z.infer<typeof surfaceSchema>;
 
@@ -110,6 +129,11 @@ export const themeSchema = z
 		memory: memoryLayoutSchema.default('strip'),
 		sunsetPhoto: sunsetPhotoSchema.default('off'),
 		sky: skySchema.default('drone'),
+		menuArt: menuArtSchema.default('off'),
+		artBehind: artBehindSchema.default('mixed'),
+		artStyle: artStyleSchema.default('chalk'),
+		artMotion: artMotionSchema.default('draw'),
+		menuBg: menuBgSchema.default('sky'),
 		/** Show the live theme switcher panel. Turn off before launch. */
 		switcher: z.boolean().default(false)
 	})
@@ -126,6 +150,8 @@ export const siteConfigSchema = z.object({
 	url: z.url(),
 	description: z.string().min(1),
 	locale: z.string().default('en-IN'),
+	/** Year the cafe opened; used in the structured data for search engines. */
+	founded: z.number().int().optional(),
 
 	/**
 	 * Ambient background mood. 'auto' picks by month and hour on the visitor's clock

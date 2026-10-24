@@ -1,25 +1,28 @@
 import type { CafeEvent } from './types';
 
-// Events, with the cafe's own photos from Instagram. The market needs real dates from the owners.
+// Events. The market needs real dates from the owners; music is whenever someone brings an instrument.
 export const events: CafeEvent[] = [
 	{
 		title: "Artists' Market",
 		when: 'Weekends, spring',
 		recurring: true,
-		description: 'Local makers, music and the garden open late.',
+		description:
+			'Local makers set up on the grass: jewellery, prints, pottery, and the garden open late.',
 		image: {
-			file: 'chilling-in-billing.jpg',
-			alt: 'People sitting on the grass under the trees, a monk on a cane chair'
+			file: 'artists-market-stall.jpg',
+			alt: 'A market stall of handmade jewellery on a white cloth in the garden, a cane chair beside it',
+			credit: 'colourmejewels'
 		}
 	},
 	{
-		title: 'A short history of Bir Tibetan Colony',
-		when: '30 April 2018',
+		title: 'Music, any and all the time',
+		when: 'Whenever',
+		recurring: true,
 		description:
-			'A conversation with Khenpo Ngawang of Dzongsar Monastery, on the grass under the big tree.',
+			'No stage, no schedule. Someone sits on the terrace with an instrument and the afternoon changes.',
 		image: {
-			file: 'tibetan-colony-talk.jpg',
-			alt: 'Khenpo Ngawang in red robes speaking to a circle of people on the grass'
+			file: 'music-on-the-terrace.jpg',
+			alt: 'A musician in a pink turban playing a stringed instrument on a chair in the garden'
 		}
 	}
 ];

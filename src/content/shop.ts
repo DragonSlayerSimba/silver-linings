@@ -1,32 +1,24 @@
-import type { ShopItem } from './types';
+import type { ShopGroup } from './types';
 
-// "Made with love in Bir": small things sold at the counter. Photos from the cafe's own posts.
-export const shopItems: ShopItem[] = [
+// "Made with love in Bir": the two shelves by the counter, photographed 2026-10-22.
+// Prices and makers' QR codes are on the shelf itself.
+export const shopGroups: ShopGroup[] = [
 	{
-		name: 'Shunya Farm pickles',
-		description: 'Turnip, carrot, French beans and beetroot, pickled in apple cider vinegar.',
-		maker: 'Shunya Farm, Bir',
-		image: {
-			file: 'shunya-pickles.jpg',
-			alt: 'Four jars of pickles with handwritten labels on a wooden table'
-		}
-	},
-	{
-		name: 'Postcards of Bir',
+		title: 'Local produce',
 		description:
-			'Paragliders at sunset, wheat fields, a backpacker. Drawn by regulars, printed for the counter.',
+			'Kangra Bliss teas from Palampur (rose, blue pea, Kashmiri kahwa, tulsi ginger, jasmine green), sea buckthorn pulp from the high valleys, and Ney Thuk, a Tibetan barley porridge from 4,200 m.',
 		image: {
-			file: 'postcards.jpg',
-			alt: 'Two polaroid-style postcards of Bir: a paraglider at sunset and a wheat field'
+			file: 'local-produce.jpg',
+			alt: 'Jars of Kangra Bliss teas, a bottle and tins of sea buckthorn pulp and a bag of Ney Thuk porridge on the wooden counter'
 		}
 	},
 	{
-		name: 'Illustrated postcards',
-		description: 'The backpacker series by a Silver Linings regular.',
-		maker: '@thoughtrecorder',
+		title: 'Artists',
+		description:
+			'Made by people who sit here. Clay magnets from Bir Clay Studio, 3D-printed bookmarks by Red Kite Studio, hand-painted Shin-chan magnets and watercolour cards. Pay the maker directly.',
 		image: {
-			file: 'postcard-backpacker.jpg',
-			alt: 'A postcard of a backpacker by a lake, stamped Silver Linings Bir Billing'
+			file: 'artists.jpg',
+			alt: 'Hand-painted cartoon magnets, clay magnets on watercolour cards, a basket of art cards and a stand of 3D-printed bookmarks'
 		}
 	}
 ];

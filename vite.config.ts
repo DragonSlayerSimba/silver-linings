@@ -16,7 +16,8 @@ export default defineConfig({
 			},
 			adapter: adapter(),
 			// Empty at a domain root; the GitHub Pages workflow sets BASE_PATH=/<repo>.
-			paths: { base: (process.env.BASE_PATH ?? '') as '' | `/${string}` },
+			// Absolute (not relative) paths so 404.html links work from any missing URL depth.
+			paths: { base: (process.env.BASE_PATH ?? '') as '' | `/${string}`, relative: false },
 			alias: {
 				$config: 'site.config.ts',
 				$content: 'src/content'

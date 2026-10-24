@@ -115,20 +115,29 @@ export const memories: Memory[] = [
 		when: '2021',
 		title: 'The gate',
 		story:
-			'A roofed gate with the timings painted on, the garden from above under a storm sky, and inside the new room "the master chef of Silver Linings, Harish Thakur".',
+			'A roofed gate with the timings painted on, and the garden from above under a storm sky.',
 		image: {
-			file: '2021-01-gate-sign.jpg',
-			alt: 'The roofed gate with the Silver Linings sign, timing and open boards'
-		},
-		gallery: [
-			{
-				file: '2021-06-from-above.jpg',
-				alt: 'The cafe and garden from above under a storm sky, the gate in the foreground'
-			},
-			{
-				file: '2021-06-master-chef.jpg',
-				alt: 'Harish Thakur behind the counter under the timber roof'
-			}
-		]
+			file: '2021-06-from-above.jpg',
+			alt: 'The cafe and garden from above under a storm sky, the gate in the foreground'
+		}
+	},
+	{
+		when: 'December 2021',
+		title: 'Storm passes',
+		story: 'A double rainbow over the gate one wet December afternoon.',
+		image: {
+			file: '2021-12-double-rainbow.jpg',
+			alt: 'A double rainbow over the cafe gate and bougainvillea after rain'
+		}
+	},
+	{
+		when: 'October 2025',
+		title: 'Lights on',
+		story: 'Seen from the road above at dusk: the sky going orange, the cafe lit below.',
+		image: {
+			file: '2025-10-lights-on.jpg',
+			alt: 'The cafe at dusk from above, its porch lit under an orange and blue sky',
+			credit: 'travleensekhon'
+		}
 	}
 ];

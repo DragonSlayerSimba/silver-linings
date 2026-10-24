@@ -1,5 +1,5 @@
 /**
- * Sunset photos for the mood trial (Theme lab → Sunset / Sky). Each entry
+ * Sky photos for the mood trial (Theme lab → Sunset / Sky). Each entry
  * names a file in src/lib/assets/photos/mood/ and where to anchor the crop.
  */
 const pictures = import.meta.glob('/src/lib/assets/photos/mood/*.jpg', {

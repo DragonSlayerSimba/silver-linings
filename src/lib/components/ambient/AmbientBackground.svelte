@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import config from '$config';
 	import { season } from '$lib/season.svelte';
 	import { theme } from '$lib/theme.svelte';
@@ -9,10 +10,12 @@
 	const calm = config.calm;
 	const sky = $derived(skyPhoto(theme.sky));
 	// The sky photo blends over every mood while the lab's Sunset row is 'page' (the default).
-	const showPhoto = $derived(theme.sunsetPhoto === 'page');
+	// Theme lab → Menu bg 'paper': the menu page drops the sky and sits on plain paper.
+	const paper = $derived(page.route.id === '/menu' && theme.menuBg === 'paper');
+	const showPhoto = $derived(theme.sunsetPhoto === 'page' && !paper);
 </script>
 
-<div class="ambient" class:calm data-season={season.current} aria-hidden="true">
+<div class="ambient" class:calm class:paper data-season={season.current} aria-hidden="true">
 	<div class="layer golden-hour"></div>
 	<div class="layer night">
 		<span class="moon"></span>
@@ -48,6 +51,19 @@
 		z-index: -1;
 		overflow: hidden;
 		background: var(--sl-surface);
+	}
+	/* Paper: lighter than the surface, a warm vignette, and the grain layer does the rest. */
+	.paper {
+		background:
+			radial-gradient(
+				120% 80% at 50% 0%,
+				color-mix(in oklab, var(--sl-cream) 80%, white),
+				transparent 70%
+			),
+			color-mix(in oklab, var(--sl-surface) 55%, var(--sl-cream));
+	}
+	.paper .layer {
+		display: none;
 	}
 	.layer {
 		position: absolute;

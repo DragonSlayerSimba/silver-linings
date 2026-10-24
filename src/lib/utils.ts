@@ -22,12 +22,12 @@ export function closedDaysLabel(): string {
 
 const currency = () => config.menu.currency;
 
-/** "₹160", "from ₹150", or "₹150 / ₹200" for variants. Shop items pass a plain number. */
+/** "₹160", "from ₹150", or "8″ ₹280 / 10″ ₹380" for variants. Shop items pass a plain number. */
 export function priceLabel(price: Price | undefined): string {
 	if (price === undefined) return '';
 	if (typeof price === 'number') return `${currency()}${price}`;
 	if ('from' in price) return `from ${currency()}${price.from}`;
-	return price.map((v) => `${currency()}${v.price}`).join(' / ');
+	return price.map((v) => `${v.label} ${currency()}${v.price}`).join(' / ');
 }
 
 export function rupees(n: number): string {

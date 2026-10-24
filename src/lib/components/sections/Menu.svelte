@@ -40,7 +40,7 @@
 	const counter: Slide = {
 		key: 'counter',
 		src: pictureOf('counter.jpg') ?? '',
-		alt: 'The dessert counter: pies and cakes behind glass, hand-lettered labels below',
+		alt: 'The dessert counter: cakes and pies on three glass shelves, each with a hand-lettered baker label',
 		title: 'From the counter',
 		caption: 'Baked in small batches, gone by evening.'
 	};
@@ -79,7 +79,6 @@
 		<a
 			href={`${resolve('/menu')}#bakes`}
 			class="group block min-w-0 overflow-hidden rounded-3xl shadow-[0_24px_60px_-30px_rgb(0_0_0/0.55)]"
-			aria-label="Bakes and desserts, from the counter"
 		>
 			<div class="relative aspect-[4/4.3] overflow-hidden bg-wood">
 				{#each slides as s, i (s.key)}
@@ -192,7 +191,10 @@
 						<li>
 							<a
 								href={`${resolve('/menu')}#${c.id}`}
-								class={['block rounded-full border px-3 py-1 text-sm transition', b.chip]}
+								class={[
+									'block rounded-full border px-3 py-1.5 text-sm leading-tight transition',
+									b.chip
+								]}
 							>
 								{c.title}
 							</a>

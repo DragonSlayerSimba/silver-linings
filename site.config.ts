@@ -11,6 +11,7 @@ export default defineSiteConfig({
 	url: 'https://silverliningscafe.site',
 	description:
 		'A hand-crafted mud cafe in Bir, Himachal Pradesh. Specialty coffee, hand-made desserts and a sanctuary from the storm.',
+	founded: 2016, // "since 2016" on the counter logo
 
 	season: {
 		mode: 'golden-hour', // auto | golden-hour | night | snow
@@ -56,7 +57,12 @@ export default defineSiteConfig({
 		board: 'wood', // slate | wood | none — the chalkboard strip and icon discs in the menu
 		memory: 'strip', // strip | timeline — Memory Lane layout
 		sunsetPhoto: 'page', // off | page | band — trial of a sunset photo as background
-		sky: 'drone', // drone | meadow | ember — which sunset photo
+		sky: 'drone', // drone | meadow | ember — which sky photo
+		menuArt: 'behind', // off | beside | behind | all — drawings on the menu page (see schema.ts)
+		artBehind: 'mixed', // mixed | right | big | left — size and side of the watermark
+		artStyle: 'ink', // chalk | ink
+		artMotion: 'draw', // draw | loop | still
+		menuBg: 'paper', // sky | paper — menu page backdrop
 		switcher: true
 	},
 
@@ -87,6 +93,7 @@ export default defineSiteConfig({
 	menu: {
 		currency: '₹',
 		showPrices: true,
+		lastVerified: '2026-10-12',
 		featured: [
 			'bakes/banoffee-dreams',
 			'eggs/shakshouka',
@@ -115,7 +122,10 @@ export default defineSiteConfig({
 		address: {
 			lines: ['Bir Colony Road', 'Suja, Himachal Pradesh 176077'],
 			landmark: 'Near the paragliding landing site',
-			mapsUrl: 'https://maps.google.com/?q=Silver+Linings+Cafe+Bir'
+			// The cafe's own Google Maps place link and pin, taken from the old site's map embed.
+			mapsUrl: 'https://maps.app.goo.gl/oH2UyHxtGVqoo8126',
+			lat: 32.0392348,
+			lng: 76.7161741
 		}
 	},
 

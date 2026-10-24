@@ -13,7 +13,12 @@
 		{ key: 'board', label: 'Board', value: theme.board },
 		{ key: 'memory', label: 'Memory', value: theme.memory },
 		{ key: 'sunsetPhoto', label: 'Sunset', value: theme.sunsetPhoto },
-		{ key: 'sky', label: 'Sky', value: theme.sky }
+		{ key: 'sky', label: 'Sky', value: theme.sky },
+		{ key: 'menuArt', label: 'Menu art', value: theme.menuArt },
+		{ key: 'artBehind', label: 'Behind', value: theme.artBehind },
+		{ key: 'artStyle', label: 'Art style', value: theme.artStyle },
+		{ key: 'artMotion', label: 'Art motion', value: theme.artMotion },
+		{ key: 'menuBg', label: 'Menu bg', value: theme.menuBg }
 	] as const);
 </script>
 
@@ -34,7 +39,7 @@
 		<div class="space-y-2 px-3 pb-3">
 			{#each rows as row (row.key)}
 				<div class="flex items-center gap-2">
-					<span class="w-14 text-ink/60">{row.label}</span>
+					<span class="w-16 text-ink/60">{row.label}</span>
 					<div class="flex gap-1">
 						{#each options[row.key] as opt (opt)}
 							<button

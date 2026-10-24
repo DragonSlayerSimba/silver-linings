@@ -16,6 +16,8 @@
 			sizes="100vw"
 			class="absolute inset-0 -z-10 size-full object-cover"
 			style={`object-position: ${sky.position}`}
+			loading="lazy"
+			decoding="async"
 		/>
 	{/key}
 	<div
