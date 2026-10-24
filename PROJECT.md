@@ -152,24 +152,28 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - Events and Made in Bir scroll sideways on phones; thin tinted scrollbars on all photo strips.
 - Moods cut to **golden hour** (default; the old rain gradient, no streaks), **night**, **snow**. A sky photo is colour-blended over every mood (lab `Sunset: page`, `Sky: drone`). Removed moods saved in `reources/dev/ambient-all-moods-2026-09-30.svelte`.
 - Lab picks made defaults: brick, ochre, scrim, natural, left, wood, strip, page, drone. Theme lab now shows only on `npm run dev`.
-- **Live test copy:** https://dragonslayersimba.github.io/silver-linings/ from github.com/DragonSlayerSimba/silver-linings (public). Every push to main deploys via `.github/workflows/deploy.yml`; Pages source must be "GitHub Actions". robots blocked on this copy.
+- **Live:** https://silverlinings.cafe (GitHub Pages, custom domain, launched 2026-10-24) from github.com/DragonSlayerSimba/silver-linings (public). Every push to main deploys via `.github/workflows/deploy.yml`; Pages source must be "GitHub Actions". The old github.io address redirects to the domain.
 
 ### Session 4 (2026-10-16) — real menu
 
 - Three chalkboard photos (2026-10-12) transcribed; `menu.ts` rewritten with real prices for everything. New: Fresh Juices category (`juices`, icon `juice`), Besan and Ragi Cheela, Ragi Pancake, Aglio e Olio, 17 coffees (cold ones under a `Cold` subgroup), Chai, Matcha hot/iced, Iced Vietnamese; pizza is now make-your-own by size (8/10/12″) plus the Margherita offer. Dropped: Mint Tea, Garden Veg and Mushroom & Corn pizzas, Cold Brew. Variant prices now print their labels ("8″ ₹280 / 10″ ₹380"). `menu.lastVerified` set to 2026-10-12.
 - Five unclear readings were confirmed by the owner on 2026-10-22: Poached Egg and French Omelette removed, 8″ pizza 280, shakes as "Banana / Mango ₹150" and "Strawberry ₹200" on separate lines, extra hummus 70. Price variants now stack one per line on the menu page.
 
-### Open, for the final session (bring the final resources)
+### Session 6 (2026-10-24) — menu art, SEO, launch
 
-1. **Content from the owners**: a reflection-free counter photo; originals of the captured posts or a full Instagram export; the logo vector; what happened Oct 2016 → Feb 2018; Artists' Market dates; prices for the shelf items without a label (teas, sea buckthorn, porridge, painted magnets, cards).
-2. **Rights**: the ten visitor photos in Moments need a yes from each poster (they are public on the test copy now), or hide Moments.
-3. **Mood photos**: full-size originals of the meadow and ember sunsets (current copies are WhatsApp-compressed); photos for night and snow if they should get their own sky. Decide whether night needs a real dark theme.
-4. **Mood ideas discussed, not chosen**: "Bir right now" (IST clock, real sunset time, live Open-Meteo weather), per-mood tagline / status line / menu pick, scroll-through-a-day.
-5. **Clean-up**: delete losing Theme lab options and the band/MoodBand trial if unused; set `switcher: false` for launch.
-6. **Remaining mobile**: menu teaser tile height, Events eyebrow wrap.
-7. **Find Us**: a map where the gate photo was.
-8. Type and spacing tune; copy pass on all section text.
-9. **Launch hosting**: GitHub Pages on silverlinings.cafe (custom domain set in repo Settings → Pages; GoDaddy A records to GitHub + www CNAME). Cloudflare stays an option later for headers and analytics.
+- Menu page: ink line drawings per category (draw-on, small loops, cookie bite), paper backdrop, Cookies category, Mud Cake out, Juices before Coolers. Theme lab rows added for art, defaults chosen by eye: behind / mixed / ink / draw / paper.
+- SEO and plumbing: canonical, Open Graph and Twitter cards with the interior share image, JSON-LD cafe record with the map pin, sitemap, styled 404, real favicon and icons, manifest, lazy photos, hero slides mounted one at a time. Lighthouse on production: mobile 98 / 95 / 100 / 100, desktop 100 / 95 / 100 / 100.
+- Launched on silverlinings.cafe (GoDaddy DNS → GitHub Pages) and verified live.
+
+### After launch (owner)
+
+1. Repo Settings → Pages → tick **Enforce HTTPS** (plain http still answers without redirecting until then).
+2. Google Search Console: verify the domain, submit `https://silverlinings.cafe/sitemap.xml`.
+3. Google Business Profile: website link, and the same hours and phone as the site. Instagram bio link.
+4. Analytics, if wanted: Cloudflare Web Analytics (cookie-free) or similar; nothing is installed.
+5. Content still owed: a reflection-free counter photo; prices for unlabelled shelf items; the pilots photo date; the logo vector (emblem at `reources/instagram-picks/_full/s002.jpg`, traceable).
+6. Design calls left as they are on purpose: ochre-surface contrast (a11y 95), the share image.
+7. Clean-up when convenient: delete losing Theme lab options and the band/MoodBand trial; set `switcher: false`.
 
 ### Later
 
@@ -198,7 +202,7 @@ SvelteKit + Svelte 5 + Tailwind v4, Zod-validated `site.config.ts`, typed conten
 - `src/lib/mood-photos.ts` — sky photos for the moods (`photos/mood/`), crop anchors and alt text. `MoodBand.svelte` is the band trial.
 - `src/lib/components/NavIcon.svelte` — phone header icons keyed by `phoneIcon`.
 - `labOn` in `theme.svelte.ts` — the Theme lab exists only on the dev server.
-- Deploy: static `build/`. `BASE_PATH` sets the base path (the Pages workflow uses `/silver-linings`); internal links go through `resolve()` from `$app/paths`. Live test copy on GitHub Pages; Cloudflare Workers still the launch option.
+- Deploy: static `build/`, paths absolute (`paths.relative: false` so `404.html` links work at any depth). `BASE_PATH` is empty in production (custom domain at the root); set it to `/<repo>` only for a project-pages test copy. Internal links go through `resolve()` from `$app/paths`. SEO head lives in `src/routes/+layout.svelte` with `src/lib/seo.ts`; sitemap at `src/routes/sitemap.xml/+server.ts`; 404 at `src/routes/404/`.
 
 ---
 
