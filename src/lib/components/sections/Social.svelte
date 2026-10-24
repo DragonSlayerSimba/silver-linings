@@ -45,9 +45,9 @@
 							<p class="truncate text-sm text-ink/70">{post.caption}</p>
 						{/if}
 						{#if post.handle}
-							<!-- Long handles are cut short so the caption keeps its room. -->
-							<p class="ml-auto max-w-[55%] shrink-0 truncate font-chalk text-base text-ink/60">
-								@{post.handle}
+							<!-- Handles are cut to the same length for privacy: a nod to the poster, not a lookup key. -->
+							<p class="ml-auto shrink-0 font-chalk text-base text-ink/60">
+								@{post.handle.slice(0, 5)}…
 							</p>
 						{/if}
 					</figcaption>
